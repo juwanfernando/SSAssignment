@@ -1,0 +1,22 @@
+@charset "UTF-8";
+#category li:hover {
+    background-color: #28a745;
+    transition: all .3s;
+    color: white;
+    font-weight: bold;
+    margin-left: 5px;
+}
+#category {
+    margin-bottom: 50px;
+    position: absolute;
+    left: 23%;
+}
+#category li{
+    transition: all .3s;
+    text-align: left;
+}
+#category span {
+    font-weight: bold;
+    padding: 10px;
+    background-color: #28a745;
+}

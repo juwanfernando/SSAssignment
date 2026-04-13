@@ -1,8 +1,14 @@
 <?php
 include_once "connect.php";
 function existsUser($studentID, $password, mysqli $connect) {
-    $userQuery = "SELECT *FROM students WHERE studentID = '$studentID' AND password = '$password'";
-    $result = $connect->query($userQuery);
+    //$userQuery = "SELECT *FROM students WHERE studentID = '$studentID' AND password = '$password'";
+    //$result = $connect->query($userQuery);
+
+    $stmt = $connect->prepare("SELECT * FROM students WHERE studentID = ? AND password = ?");
+    $stmt->bind_param("ss", $studentID, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows == 0) {
         echo "<script>window.alert('This account is not exists, please check your account');
                window.location.replace(window.location.href);
@@ -12,8 +18,14 @@ function existsUser($studentID, $password, mysqli $connect) {
     return true;
 }
 function confirmAdmin($username, $password, mysqli $connect) {
-    $adminQuery = "SELECT *FROM admin WHERE username = '$username' AND password = '$password'";
-    $result = $connect->query($adminQuery);
+    //$adminQuery = "SELECT *FROM admin WHERE username = '$username' AND password = '$password'";
+    //$result = $connect->query($adminQuery);
+
+    $stmt = $connect->prepare("SELECT * FROM admin WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows == 0) {
 //        session_destroy();
         return false;
@@ -24,8 +36,14 @@ function confirmAdmin($username, $password, mysqli $connect) {
     }
 }
 function confirmEmployee($username, $password, mysqli $connect) {
-    $employeeQuery = "SELECT *FROM employee WHERE employeeID = '$username' AND password = '$password'";
-    $result = $connect->query($employeeQuery);
+    //$employeeQuery = "SELECT *FROM employee WHERE employeeID = '$username' AND password = '$password'";
+    //$result = $connect->query($employeeQuery);
+
+    $stmt = $connect->prepare("SELECT * FROM employee WHERE employeeID = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows == 0) return false;
     else {
         $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -34,8 +52,14 @@ function confirmEmployee($username, $password, mysqli $connect) {
     }
 }
 function getInfo($studentID, $password, mysqli $connect){
-    $userQuery = "SELECT *FROM students WHERE studentID = '$studentID' AND password = '$password'";
-    $result = $connect->query($userQuery);
+    //$userQuery = "SELECT *FROM students WHERE studentID = '$studentID' AND password = '$password'";
+    //$result = $connect->query($userQuery);
+
+    $stmt = $connect->prepare("SELECT * FROM students WHERE studentID = ? AND password = ?");
+    $stmt->bind_param("ss", $studentID, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows == 0) die("Error");
     else {
         $row = $result->fetch_array(MYSQLI_ASSOC);

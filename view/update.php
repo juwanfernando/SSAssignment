@@ -2,7 +2,8 @@
 include_once "../model/connect.php";
 include_once "../Objects/Book.php";
 include "../model/validate.php";
-$connect = connectServer("localhost", "root", "", 3306);
+//$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $dbname = "library";
 $connect -> select_db($dbname);
 if (!isset($_SESSION['admin'])) header("Location: login.php");
@@ -282,7 +283,8 @@ if (!isset($_GET['bookID']) || empty($_GET['bookID'])) {
                                     Update<br />
                                     Book's Information
                                 </h1>
-                                <form action="update.php?bookID=<?php if (isset($_GET['bookID'])) echo $_GET['bookID'];?>" method="post" style="margin-top: 100px;">
+                                <!--<form action="update.php?bookID=<?php if (isset($_GET['bookID'])) echo $_GET['bookID'];?>" method="post" style="margin-top: 100px;">-->
+                                <form action="update.php?bookID=<?php echo htmlspecialchars($_GET['bookID'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" method="post" style="margin-top: 100px;">    
                                     <input
                                         class="form-control form-control-lg mb-2"
                                         type="search"

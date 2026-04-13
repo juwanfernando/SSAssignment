@@ -1,9 +1,12 @@
 <?php
 include_once "../model/connect.php";
 include_once "../model/user.php";
+include_once "../model/google_oauth.php";
 $connect = connectServer("localhost", "root", "", 3306);
 $dbname = "library";
 $connect->select_db($dbname);
+
+$googleAuthUrl = getGoogleAuthUrl();
 if (isset($_POST["login"])) {
     if (confirmAdmin($_POST["username"], $_POST["password"], $connect))  header("Location: searchBookView.php");
     if (confirmEmployee($_POST["username"], $_POST["password"], $connect))  header("Location: searchBookView.php");
@@ -179,6 +182,16 @@ if (isset($_POST["login"])) {
                                         <a class="btn hero-btn" href="signUp.php">
                                             SignUp
                                             <i class="fas fa-plus-circle fa-lg ml-2"></i>
+                                        </a>
+                                    </div>
+
+                                    <!-- Google OAuth Sign-In -->
+                                    <div class="mt-4" data-animation="fadeInRight" data-delay="1s">
+                                        <a href="<?php echo htmlspecialchars($googleAuthUrl); ?>" class="btn" style="background:#fff;color:#444;border:1px solid #ccc;font-weight:500;padding:10px 20px;">
+                                            <img src="https://developers.google.com/identity/images/g-logo.png"
+                                                 alt="Google"
+                                                 style="width:18px;height:18px;vertical-align:middle;margin-right:8px;" />
+                                            Sign in with Google
                                         </a>
                                     </div>
                                 </form>

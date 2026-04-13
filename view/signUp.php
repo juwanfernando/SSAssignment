@@ -4,7 +4,8 @@ include_once "../model/timeout.php";
 include_once "../model/validate.php";
 include_once "../controller/addAccount.php";
 include_once "../Objects/Student.php";
-$connect = connectServer("localhost", "root", "", 3306);
+//$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $dbname = "library";
 $connect->select_db($dbname);
 if (isset($_POST["signup"])) {

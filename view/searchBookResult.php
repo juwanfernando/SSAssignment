@@ -5,7 +5,8 @@ include_once "../Objects/searchBook.php";
 include_once "../model/timeout.php";
 include_once "../model/user.php";
 include_once "../model/validate.php";
-$connect = connectServer("localhost", "root", "", 3306);
+//$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $dbname = "library";
 $connect->select_db($dbname);
 if (isset($_POST["search"])) {
@@ -242,15 +243,15 @@ if (isset($_SESSION['student']['id'])) $cartDetail = getInfoCart($_SESSION['stud
                         if (intval($row['quantity']) > 0) {
                             ?>
                             <a href="borrowView.php?bookID=<?php echo $row['bookID'];?>&cap=<?php echo $row['quantity']; ?>" class="a-custom">
-                                <?php echo $row["name"] . "<br/>"; ?>
-                                <?php echo $row["caption"]; ?>
+                                <?php echo htmlspecialchars($row["name"], ENT_QUOTES, 'UTF-8') . "<br/>"; ?>
+                                <?php echo htmlspecialchars($row["caption"], ENT_QUOTES, 'UTF-8'); ?>
                             </a>
                             <?php
                         } else {
                             ?>
                             <p style="cursor: not-allowed" class="over">
-                                <?php echo $row["name"] . "<br/>"; ?>
-                                <?php echo $row["caption"]; ?>
+                                <?php echo htmlspecialchars($row["name"], ENT_QUOTES, 'UTF-8') . "<br/>"; ?>
+                                <?php echo htmlspecialchars($row["caption"], ENT_QUOTES, 'UTF-8'); ?>
                             </p>
                             <?php
                         }
@@ -259,14 +260,14 @@ if (isset($_SESSION['student']['id'])) $cartDetail = getInfoCart($_SESSION['stud
                     } else {
                         ?>
                         <a href="update.php?bookID=<?php echo $row['bookID'];?>" class="a-custom">
-                            <?php echo $row["name"] . "<br/>"; ?>
-                            <?php echo $row["caption"]; ?>
+                            <?php echo htmlspecialchars($row["name"], ENT_QUOTES, 'UTF-8') . "<br/>"; ?>
+                            <?php echo htmlspecialchars($row["caption"], ENT_QUOTES, 'UTF-8'); ?>
                         </a>
                         <?php
                     }
                     ?>
                     <br/> <br/>
-                    <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Author: " . "<strong>" . $row["author"] . "</strong>"?></p>
+                    <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Author: " . "<strong>" . htmlspecialchars($row["author"], ENT_QUOTES, 'UTF-8') . "</strong>"?></p>
                     <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Publish Date: " . "<strong>" . date("d/m/Y", strtotime($row["publishDate"])) . "</strong>"?></p>
                 </div>
                 <div class="col col-sm-3">
@@ -321,10 +322,10 @@ if (isset($_SESSION['student']['id'])) $cartDetail = getInfoCart($_SESSION['stud
                      </div>
                      <div class="col-sm-7">
                          <a href="borrowView.php?bookID=<?php echo $some['bookID'];?>&cap=<?php echo $some['quantity']; ?>" class="a-custom">
-                             <?php echo $some["name"] . "<br/>"; ?>
-                             <?php echo $some["caption"]; ?>
+                             <?php echo htmlspecialchars($some["name"], ENT_QUOTES, 'UTF-8') . "<br/>"; ?>
+                             <?php echo htmlspecialchars($some["caption"], ENT_QUOTES, 'UTF-8'); ?>
                          </a> <br/> <br/>
-                         <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Author: " . "<strong>" . $some["author"] . "</strong>"?></p>
+                         <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Author: " . "<strong>" . htmlspecialchars($some["author"], ENT_QUOTES, 'UTF-8') . "</strong>"?></p>
                          <p style="font-family: Arial; font-size: 17px !important;"> <?php echo "Publish Date: " . "<strong>" . date("d/m/Y", strtotime($some["publishDate"])) . "</strong>"?></p>
                      </div>
                      <div class="col col-sm-3">

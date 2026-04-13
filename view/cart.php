@@ -5,7 +5,8 @@ include_once "../Objects/searchBook.php";
 include_once "../Objects/Book.php";
 include_once "../model/timeout.php";
 include_once "../model/user.php";
-$connect = connectServer("localhost", "root", "", 3306);
+//$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $dbname = "library";
 $connect->select_db($dbname);
 if (!isset($_SESSION['student']['id'])) header("Location: login.php");
@@ -15,6 +16,11 @@ if (isset($_POST['dateChange'])) {
         $currentPage = $_SERVER['PHP_SELF'];
         header("Location: $currentPage");
     } else {
+        $ownerCheck = $connect->query(
+            "SELECT roundID FROM returnbook WHERE roundID = " . intval($_GET['id']) .
+            " AND studentID = '" . $connect->real_escape_string($_SESSION['student']['id']) . "'"
+        );
+        if ($ownerCheck->num_rows === 0) { die("Unauthorized"); }
         $borrowDate = $_POST['borrowDate'];
         $returnDate = $_POST['returnDate'];
         $newDate = date("Y-m-d", strtotime($_POST['dateChange']));

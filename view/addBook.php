@@ -1,10 +1,15 @@
 <?php
 include_once "../model/connect.php";
 include_once "../Objects/Book.php";
-$connect = connectServer("localhost", "root", "", 3306);
+//$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $dbname = "library";
 $connect->select_db($dbname);
 $book = new Book($connect, 0);
+if (!isset($_SESSION['admin'])) {
+    header("Location: login.php");
+    exit;
+}
 if (isset($_POST['addBook'])) {
     $name = $_POST['bookName'];
     $cap = $_POST['caption'];
@@ -20,7 +25,7 @@ if (isset($_POST['addBook'])) {
         echo "<script>window.alert('Add book fail.')</script>";
     }
 }
-if (!isset($_SESSION['admin'])) header("Location: login.php");
+//if (!isset($_SESSION['admin'])) header("Location: login.php");
 ?>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">

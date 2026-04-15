@@ -89,3 +89,4 @@ function setOAuthSession($user) {
     $_SESSION['student']['class']    = '';
     $_SESSION['student']['password'] = '';
 }
+?>

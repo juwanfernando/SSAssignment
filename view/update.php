@@ -265,7 +265,7 @@ if (!isset($_GET['bookID']) || empty($_GET['bookID'])) {
     <!-- Slider Area Start-->
     <div class="slider-area">
         <div class="slider-active">
-            <div class="single-slider slider-height d-flex align-items-center">
+            <div class="single-slider slider-height d-flex align-items-center"> 
                 <div class="container">
                     <div class="row d-flex align-items-center">
                         <div class="col-lg-5 d-none d-xl-block">
@@ -283,7 +283,6 @@ if (!isset($_GET['bookID']) || empty($_GET['bookID'])) {
                                     Update<br />
                                     Book's Information
                                 </h1>
-                                <!--<form action="update.php?bookID=<?php if (isset($_GET['bookID'])) echo $_GET['bookID'];?>" method="post" style="margin-top: 100px;">-->
                                 <form action="update.php?bookID=<?php echo htmlspecialchars($_GET['bookID'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" method="post" style="margin-top: 100px;">    
                                     <input
                                         class="form-control form-control-lg mb-2"

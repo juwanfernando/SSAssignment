@@ -2,7 +2,7 @@
 include_once "../model/connect.php";
 include_once "../model/google_oauth.php";
 
-$connect = connectServer("localhost", "root", "", 3306);
+$connect = connectServer(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_PORT'));
 $connect->select_db("library");
 
 if (
@@ -57,3 +57,4 @@ if (!$user) {
 setOAuthSession($user);
 header("Location: searchBookView.php");
 exit;
+?>
